@@ -1,0 +1,124 @@
+@import url('//fonts.googleapis.com/css?family=Fjalla+One');
+
+body {
+    padding:70px 0 0 0; margin:0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background:whiteSmoke;
+}
+
+header {
+    background-color: #222;
+    padding: 0;
+    min-width: 1060px;
+    border-bottom: 1px solid #333;
+    border-top: 1px solid #333;
+    box-shadow: 0 1px #000, 0 2px 1px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 1px #000, 0 2px 1px rgba(0, 0, 0, .4);
+    -webkit-box-shadow: 0 1px #000, 0 2px 1px rgba(0, 0, 0, .4);
+    position: fixed;
+    width: 100%;
+    z-index: 15;
+    top: 0;
+}
+
+a {
+    text-decoration: none;;
+}
+
+header .bar-content {
+    width:1040px;
+    margin:0 auto;
+    height:50px;
+}
+
+header .bar-content a.brand {
+    font-family: 'Fjalla One', Arial, sans-serif;
+    font-size: 22pt;
+    color: white;
+    margin: 0;
+    float: left;
+    border-left: 1px solid #000;
+    border-right: 1px solid #333;
+    box-shadow: -1px 0 #000 inset, 1px 0 #333 inset;
+    padding: 7px 13px;
+    display: inline-block;
+}
+
+header .bar-content p {
+    padding:20px 15px;
+    color:white;
+    display:inline-block;
+    margin:0;
+    font-size:11px;
+    font-weight:bold;
+}
+
+header .bar-content .brand:active {
+    padding:11px 13px 3px 13px;
+}
+
+
+.layout {
+    width:1040px;
+    margin:0 auto;
+}
+
+.layout .content {
+    width:700px;
+    display: inline-block;
+}
+
+.layout .sidebar {
+    width:300px;
+    margin-left:20px;
+    display:inline-block;
+    float:right;
+    display:fixed;
+}
+
+.layout .sidebar .box {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-color:#EEE;
+    color:#666;
+    margin-bottom:20px;
+    padding:12px 15px 15px;
+    width: 268px;
+    border: 1px solid #bbb;
+    box-shadow: 0 1px #eee, 0 0 0 1px #fff inset;
+    -moz-box-shadow: 0 1px #eee, 0 0 0 1px #fff inset;
+    -webkit-box-shadow: 0 1px #eee, 0 0 0 1px #fff inset;
+    text-shadow: 0 1px #fff;
+    font-size:12px;
+}
+
+.layout .sidebar .box h3 {
+    margin: 0px 0px 10px 0px;
+}
+
+.content .type-tab {
+    background-color: #f4f4f4;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    height: 43px;
+    overflow: hidden;
+    box-shadow: 0 1px #fff inset, 0 -1px #ddd inset;
+    -moz-box-shadow: 0 1px #fff inset, 0 -1px #ddd inset;
+    -webkit-box-shadow: 0 1px #fff inset, 0 -1px #ddd inset;
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.content .type-tab li {
+    display:inline-block;
+}
+
+.content .type-tab li a {
+    padding:10px 5px;
+    color:black;
+    background-color: white;
+    height:43px;
+}
