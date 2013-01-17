@@ -15,8 +15,19 @@
     <div class="layout">
         <div class="content">
             <ul class="type-tab">
-                <li class="active"><a href="<?=base_url()?>">What's old</a></li>
+                <li class="active"><a href="<?=base_url()?>"><strong>What's old</strong></a></li>
+                <li><a href="<?=base_url()?>"><strong>What's new</strong></a></li>
             </ul>
+            {post}
+            <article>
+                <img src="{url}">
+                <section>
+                    <p>{title}</p>
+                    <a href="/u/{author}">{author}</a>
+                    <h4><i class="icon-smile"></i>{upvotes} <i class="icon-comment"></i>{comments}</h4>
+                </section>
+            </article>
+            {/post}
         </div>
         <div class="sidebar">
             <div class="box">

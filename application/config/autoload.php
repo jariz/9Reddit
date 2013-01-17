@@ -123,7 +123,7 @@ $autoload['helper'] = array();
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('9reddit');
 
 
 /*

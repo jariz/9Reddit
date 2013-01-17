@@ -2,7 +2,7 @@
 
 body {
     padding:70px 0 0 0; margin:0;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     background:whiteSmoke;
 }
 
@@ -66,6 +66,58 @@ header .bar-content .brand:active {
 .layout .content {
     width:700px;
     display: inline-block;
+    background-color: #fff;
+    border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+}
+
+.layout .content article {
+    border-bottom: 1px solid #ddd;
+    margin:20px 10px;
+    padding-bottom:10px;
+}
+
+.layout .content article img {
+    max-width: 450px;
+}
+
+.layout .content article section {
+    float:right;
+    width:220px;
+}
+
+.layout .content article section p {
+    font-size:18px;
+    margin:0;
+    padding-bottom: 5px;
+}
+
+.layout .content article section h4 {
+    color: #999;
+    font-weight: normal;
+    font-size: 11px;
+    margin:0;
+    margin-top:10px;
+}
+
+.layout .content article section a {
+    color: #00a5f0;
+    font-size:11px;
+}
+
+.icon-smile, .icon-comment {
+    display:inline-block;
+    width:10px; height:10px;
+    margin: 0px 5px;
+}
+
+.icon-smile {
+    background:url('../img/icon-smile.png');
+}
+
+.icon-comment {
+    background:url('../img/icon-comment.png');
 }
 
 .layout .sidebar {
@@ -116,9 +168,24 @@ header .bar-content .brand:active {
     display:inline-block;
 }
 
-.content .type-tab li a {
-    padding:10px 5px;
+.content .type-tab li.active {
     color:black;
     background-color: white;
-    height:43px;
+}
+
+.content .type-tab li a {
+    color: #00a5f0;
+    text-shadow: 0 1px 0 #fff;
+    font-size: 13px;
+    padding:11px 22px 14px 20px;
+    border-right: 1px solid #fff;
+    box-shadow: -1px 0 #ddd inset;
+    -webkit-box-shadow: -1px 0 #ddd inset;
+    -moz-box-shadow: -1px 0 #ddd inset;
+    font-weight:bold;
+    line-height: 43px;
+}
+
+.content .type-tab li.active a {
+    color:black;
 }
