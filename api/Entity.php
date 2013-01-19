@@ -72,7 +72,7 @@ abstract class Entity implements ArrayAccess
      */
     public function offsetGet($name)
     {
-        return $this->data[$name];
+        return @$this->data[$name];
     }
 
     /**
