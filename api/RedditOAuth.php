@@ -28,7 +28,7 @@ class RedditOAuth
     private $redirectUrl;
 
     private $scope;
-    private $modHash;
+    public $modHash;
 
     public $authorized = false;
 
@@ -39,6 +39,14 @@ class RedditOAuth
         $this->redirectUrl = $redirectUrl;
     }
 
+    public function getModHash() {
+        return $this->modHash;
+    }
+
+    public function setModHash($hash) {
+        $this->modHash = $hash;
+    }
+
     public function setAccessToken($token)
     {
         $this->authorized = true;
@@ -47,9 +55,14 @@ class RedditOAuth
     }
 
     public function Fetch($url, $parameters = array(), $http_method = \OAuth2\Client::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = \OAuth2\Client::HTTP_FORM_CONTENT_TYPE_MULTIPART) {
-        $f = $this->client->fetch($this->realmUrl.$url, $parameters, $http_method, $http_headers, $form_content_type);
-        if(isset($f["result"]["data"]["modhash"])) $this->modHash = $f["result"]["data"]["modhash"];
-        return $f;
+        try
+        {
+            $f = $this->client->fetch($this->realmUrl.$url, $parameters, $http_method, $http_headers, $form_content_type);
+            if(isset($f["result"]["data"]["modhash"])) $this->modHash = $f["result"]["data"]["modhash"];
+            return $f;
+        } catch(Exception $e) {
+            show_error($e->getMessage());
+        }
     }
 
     private function buildScope() {
@@ -80,10 +93,27 @@ class RedditOAuth
         }
     }
 
+    public function vote($thingId, $direction)
+    {
+        $verb = 'POST';
+        $url = 'api/vote';
+        $data = array(
+            'id' => $thingId,
+            'dir' => $direction,
+            'uh' => $this->modHash,
+        );
 
-    public function getFrontPage() {
+        $response = $this->Fetch($url, $data, $verb);
+        //var_dump($response);
+        if (empty($response["result"])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        $response = $this->Fetch(".json");
+    public function getSubreddit($s) {
+        $response = $this->Fetch("/r/$s.json");
         $links = array();
         if(isset($response["result"]["data"]["error"])) return false;
         foreach ($response["result"]['data']['children'] as $child) {
@@ -103,6 +133,21 @@ class RedditOAuth
         if(!isset($response["result"]["error"]))
             return array($response["result"]);
         else return array();
+    }
+
+    public function getMySubreddits() {
+        $response = $this->Fetch('reddits/mine.json', array("limit" => 100));
+
+        $subreddits = array();
+
+        foreach ($response["result"]['data']['children'] as $child) {
+
+            $subreddit = new \RedditApiClient\Subreddit($this);
+            $subreddit->setData($child['data']);
+
+            $subreddits[] = $subreddit;
+        }
+        return $subreddits;
     }
 
 

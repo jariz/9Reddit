@@ -104,6 +104,8 @@ header .bar-content input:focus {
 
 .layout .content article img {
     max-width: 450px;
+    min-width: 200px;
+    min-height: 200px;
 }
 
 .layout .content article section {
@@ -275,6 +277,14 @@ header .bar-content .btn {
     width: 22px;
     height: 22px;
     margin: 14px auto;
+}
+
+.voting li.clicked:first-child {
+    background-color: #BBD3FF;
+}
+
+.voting li.clicked:last-child {
+    background-color: #FFD484;
 }
 
 .icon-like {

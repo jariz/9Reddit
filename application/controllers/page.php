@@ -13,24 +13,46 @@ class page extends CI_Controller
         $this->load->library(array("parser", "reddit", "ninereddit"));
         $this->load->library("reddit_oauth", array("oauth_id" => $this->config->item("oauth_id"), "oauth_secret" => $this->config->item("oauth_secret"), "redirect_url" => $this->config->item("redirect_url"), "scope" => $this->config->item("scope")));
         $this->load->driver("session");
+
+        //$this->output->enable_profiler(true);
     }
 
     public function auth() {
         if(($a = $this->reddit_oauth->Auth()) != false) {
             $this->session->set_userdata("auth", $a);
+
+            $subs = $this->reddit_oauth->getMySubreddits();
+            $z = -1;
+            $subz = "";
+            foreach($subs as $sub) {
+                $z++;
+                $name = (substr($sub->get('url'), 3, strlen($sub->get('url'))-4));
+                if($z == 0) $subs = $name;
+                else $subz .= "+".$name;
+            }
+
+            $this->db->query($this->db->insert_string("subs", array("sid" => $this->session->userdata('session_id'), "subs" => $subz)));
+            $this->session->set_userdata("modhash", $this->reddit_oauth->getModHash());
             redirect(base_url());
         }
     }
 
+    function initCache() {
+        $this->output->cache(10);
+    }
+
     public function index()
     {
+        //$this->initCache();
         if($this->session->userdata("auth") == false)
             $this->renderQuery($this->db->query("SELECT * FROM old_posts"));
         else {
             $this->reddit_oauth->setAccessToken($this->session->userdata("auth"));
-            if(($links = $this->reddit_oauth->getFrontPage()) != false) {
+            $subz = $this->db->query("SELECT subs FROM subs WHERE sid = \"{$this->session->userdata('session_id')}\"")->row()->subs;
+            if(($links = $this->reddit_oauth->getSubreddit($subz)) != false) {
                 $this->authenticated = true;
-                $this->renderDynamic($this->ninereddit->filter($this->reddit_oauth->getFrontPage($links)));
+                $this->reddit_oauth->setModHash($this->session->userdata("modhash"));
+                $this->renderDynamic($this->ninereddit->filter($links));
             } else {
                 $this->renderQuery($this->db->query("SELECT * FROM old_posts"));
             }
@@ -40,6 +62,7 @@ class page extends CI_Controller
 
     public function newposts()
     {
+        $this->initCache();
         $this->renderQuery($this->db->query("SELECT * FROM posts"));
     }
 
@@ -48,11 +71,28 @@ class page extends CI_Controller
         redirect(base_url());
     }
 
+    function initAuth() {
+        if($this->session->userdata("auth") != false) {
+            $this->reddit_oauth->setAccessToken($this->session->userdata("auth"));
+            $this->reddit_oauth->modHash = $this->session->userdata("modhash");
+        }
+    }
+
+    public function vote() {
+        $dir = $this->uri->segment(2);
+        $thing = $this->uri->segment(3);
+        if(is_numeric($dir) && substr($thing,0,3) == "t3_" && ctype_alnum(substr($thing,3))) {
+            $this->initAuth();
+            $this->output->set_output(json_encode(array("result" => $this->reddit_oauth->vote($thing,$dir))));//->set_content_type("json");
+        }
+    }
+
     public function subreddit($subreddit) {
+        $this->initCache();
         try {
             $this->renderDynamic($this->ninereddit->filter($this->reddit->getLinksBySubreddit($subreddit)));
-        } catch(\RedditApiClient\RedditException $ex) {
-            if(\RedditApiClient\RedditException::NO_SUCH_SUBREDDIT) {
+        } catch(Exception $ex) {
+            if($ex->getCode() == \RedditApiClient\RedditException::NO_SUCH_SUBREDDIT) {
                 show_404();
             } else {
                 show_error("We were unable to contact reddit, try again later", 500, $ex->getMessage());
@@ -61,6 +101,7 @@ class page extends CI_Controller
     }
 
     public function user($user) {
+        $this->initCache();
         try {
             $this->renderDynamic($this->ninereddit->filter($this->reddit->getLinksByUsername($user)));
         } catch(Exception $ex) {
@@ -81,8 +122,8 @@ class page extends CI_Controller
         else $noposts = "";
 
         if($this->authenticated) $me = $this->reddit_oauth->getMe();
-
-        $this->parser->parse("template", array("post" => $posts, "noposts" => $noposts, "typeitem" => $this->buildTypes(), "authorized" => $this->authenticated ? $me : array(), "notauthorized" => !$this->authenticated ? array(array()) : array()));
+        var_dump($this->reddit_oauth->getModHash());
+        $this->parser->parse("template", array("post" => $posts, "noposts" => $noposts, "typeitem" => $this->buildTypes(), "auth" => (int)$this->authenticated, "authorized" => $this->authenticated ? $me : array(), "notauthorized" => !$this->authenticated ? array(array()) : array()));
     }
 
     function buildTypes() {
@@ -103,19 +144,18 @@ class page extends CI_Controller
 
     public function cron()
     {
-        $this->output->enable_profiler(TRUE);
-
         if(!in_array(@$_SERVER["REMOTE_ADDR"], $this->config->item("cron_allowed_ips"))) {
             show_error("You're not supposed to be here little boy");
         }
 
-        if(date("G:s") == "0:00") {
+        $this->output->enable_profiler(TRUE);
+
+        if(date("G") == "0") {
             //it's midnight, move all current posts to yesterday
             $this->db->query("DELETE FROM old_posts");
             foreach($this->db->query("SELECT * FROM posts")->result_array() as $item) {
                 $this->db->query($this->db->insert_string("old_posts", $item));
             }
-
         }
         $this->db->query("DELETE FROM posts");
         $i = -1;

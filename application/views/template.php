@@ -3,7 +3,10 @@
 <head>
     <title>9Reddit</title>
     <script src="http://static.jariz.pro/js/jquery.min.js"></script>
-    <script src="<?=base_url()?>static/js/le.js"></script
+    <script src="<?=base_url()?>static/js/le.js"></script>
+    <script>
+        var auth = "{auth}";
+    </script>
     <link href="<?=base_url()?>static/css/le.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="<?=base_url()?>favicon.ico" />
 </head>
@@ -31,8 +34,8 @@
                     <a href="/u/{author}">{author}</a>
                     <h4><i class="icon-smile"></i>{upvotes} <i class="icon-comment"></i>{comments}</h4>
                     <ul class="voting">
-                        <li><a href="no"><span class="icon-unlike">Downvote</span></a></li>
-                        <li><a href="si"><span class="icon-like">Upvote</span></a></li>
+                        <li><a href="javascript:void(0)" data-thing="{thing}"><span class="icon-unlike">Downvote</span></a></li>
+                        <li><a href="javascript:void(0)" data-thing="{thing}"><span class="icon-like">Upvote</span></a></li>
                     </ul>
                 </section>
             </article>
@@ -57,7 +60,8 @@
             </div>
             <div class="box green">
                 <h4>Before you get all mad and stuff...</h4>
-                Note that this is a parody site, this is reddit with a 9gag layout. The frontpage automatically gets the last posts from yesterday, but you can also choose to get those of today
+                Note that this is a parody site, this is reddit with a 9gag layout. The frontpage automatically gets the last posts from yesterday, but you can also choose to get those of today<br>
+                <b>UPDATE: </b>You can now log in to your reddit account and see all your subscribed reddits in 9gag style!
             </div>
         </div>
     </div>

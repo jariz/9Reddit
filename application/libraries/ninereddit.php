@@ -59,7 +59,8 @@ class ninereddit
                     "upvotes" => $item->getUpvotes(),
                     "comments" => $item->countComments(),
                     "author" => $item->getAuthorName(),
-                    "url" => $url
+                    "url" => $url,
+                    "thing" => $item->getThingId()
                 );
 
                 $posts[] = $post;

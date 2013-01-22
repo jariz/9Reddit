@@ -9,5 +9,7 @@ $route["new"] = "page/newposts";
 $route["auth"] = "page/auth";
 $route["logout"] = "page/logout";
 
+$route["vote/(:any)/(:any)"] = "page/vote";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

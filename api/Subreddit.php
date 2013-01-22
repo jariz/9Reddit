@@ -38,6 +38,10 @@ class Subreddit extends Entity
         return $this['id'];
     }
 
+    public function get($what) {
+        return $this[$what];
+    }
+
     /**
      * Returns the subreddit's display name
      *
