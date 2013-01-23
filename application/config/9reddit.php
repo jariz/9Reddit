@@ -5,11 +5,7 @@
  */
 
 $config["subreddits_frontpage"] = array(
-    "AdviceAnimals",
-    "fffffffuuuuuuuuuuuu",
-    "funny",
-    "pics",
-    "im14andthisisfunny"
+    "pics", "funny", "AdviceAnimals", "fffffffuuuuuuuuuuuu", "im14andthisisfunny", "facepalm", "videos", "vimeo"
 );
 
 $config["types"] = array(
@@ -25,21 +21,51 @@ $config["types"] = array(
     )
 );
 
-$config["cron_allowed_ips"] = array("xxxxx", null);
+$config["cron_allowed_ips"] = array("xxxx", null, "xxxx");
 
 $config["slogans"] = array(
     "The site that you love to hate",
-    "\"I'm confused and mad at the same time\"",
-    "No, This is not 9gag"
+    "The frontpage of the internet yesterday",
+    "You like it and hate it at the same time"
 );
 
 //oauth data
-$config["oauth_id"] = "xxxxx";
-$config["oauth_secret"] = "xxxxx";
+$config["oauth_id"] = "xxxx";
+$config["oauth_secret"] = "xxxx";
 $config["redirect_url"] = "http://9reddit.com/auth";
 $config["scope"] = array(
     "identity",
-    "read",
     "mysubreddits",
-    "vote"
+    "vote",
+    "read"
+);
+
+$config["recommendations"] = array(
+    "funny",
+    "pics",
+    "gaming",
+    "WTF",
+    "videos",
+    "Music",
+    "movies",
+    "AdviceAnimals",
+    "aww",
+    "gifs",
+    "fffffffuuuuuuuuuuuu",
+    "gonewild",
+    "nsfw",
+    "4chan",
+    "comics",
+    "ImGoingToHellForThis",
+    "reactiongifs",
+    "pokemon",
+    "skyrim",
+    "wallpapers",
+    "facepalm",
+    "RealGirls",
+    "all"
+);
+
+$config["buttons"] = array(
+    "btn-info", "btn-primary", "btn-danger", "btn-warning", "", "btn-success", "btn-inverse"
 );
