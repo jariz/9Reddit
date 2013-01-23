@@ -10,6 +10,8 @@ $route["auth"] = "page/auth";
 $route["logout"] = "page/logout";
 
 $route["vote/(:any)/(:any)"] = "page/vote";
-
+$route["page/cron"] = "page/cron";
+$route["(:any)"] = "dev/null";
+$route["page/(:any)"] = "dev/null";
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

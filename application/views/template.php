@@ -28,7 +28,7 @@
             </ul>
             {post}
             <article>
-                <img src="{url}">
+                {url}
                 <section>
                     <p>{title}</p>
                     <a href="/u/{author}">{author}</a>
@@ -60,8 +60,11 @@
             </div>
             <div class="box green">
                 <h4>Before you get all mad and stuff...</h4>
-                Note that this is a parody site, this is reddit with a 9gag layout. The frontpage automatically gets the last posts from yesterday, but you can also choose to get those of today<br>
-                <b>UPDATE: </b>You can now log in to your reddit account and see all your subscribed reddits in 9gag style!
+                Note that this is a parody site, this is reddit with a 9gag layout. The frontpage automatically gets the last posts from yesterday, but you can also choose to get those of today
+            </div>
+            <div class="box blue">
+                <h4>Recommended subreddits</h4>
+                {button}<a href="/r/{name}" class="btn {class}">{name}</a> {/button}
             </div>
         </div>
     </div>

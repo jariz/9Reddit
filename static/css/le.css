@@ -108,6 +108,11 @@ header .bar-content input:focus {
     min-height: 200px;
 }
 
+.layout .content article iframe {
+    width: 450px;
+    height: 270px;
+}
+
 .layout .content article section {
     float:right;
     width:220px;
@@ -187,6 +192,15 @@ h3 {
 .layout .sidebar .box.green {
     border: 1px solid #20C212;
     background-color: #BBECB6;
+}
+
+.layout .sidebar .box.blue {
+    border: 1px solid #12A6C2;
+    background-color: #B6EAEC;
+}
+
+.box .btn {
+    margin-bottom: 8px;
 }
 
 .layout .sidebar .box h4 {

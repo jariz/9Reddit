@@ -74,7 +74,7 @@ class page extends CI_Controller
     function initAuth() {
         if($this->session->userdata("auth") != false) {
             $this->reddit_oauth->setAccessToken($this->session->userdata("auth"));
-            $this->reddit_oauth->modHash = $this->session->userdata("modhash");
+            $this->reddit_oauth->setModHash($this->session->userdata("modhash"));
         }
     }
 
@@ -122,8 +122,18 @@ class page extends CI_Controller
         else $noposts = "";
 
         if($this->authenticated) $me = $this->reddit_oauth->getMe();
-        var_dump($this->reddit_oauth->getModHash());
-        $this->parser->parse("template", array("post" => $posts, "noposts" => $noposts, "typeitem" => $this->buildTypes(), "auth" => (int)$this->authenticated, "authorized" => $this->authenticated ? $me : array(), "notauthorized" => !$this->authenticated ? array(array()) : array()));
+        $x = 0;
+        $classes = $this->config->item("buttons");
+        $count = count($classes)-1;
+        $buttons = array();
+        $var = $this->config->item("recommendations");
+        shuffle($var);
+        foreach($var as $button) {
+            $x++;
+            if($x == 10) break;
+            $buttons[] = array("name" => $button, "class" => $classes[rand(0,$count)]);
+        }
+        $this->parser->parse("template", array("post" => $posts, "noposts" => $noposts, "typeitem" => $this->buildTypes(), "auth" => (int)$this->authenticated, "authorized" => $this->authenticated ? $me : array(), "notauthorized" => !$this->authenticated ? array(array()) : array(), "button" => $buttons));
     }
 
     function buildTypes() {

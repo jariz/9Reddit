@@ -113,7 +113,7 @@ class RedditOAuth
     }
 
     public function getSubreddit($s) {
-        $response = $this->Fetch("/r/$s.json");
+        $response = $this->Fetch("/r/$s.json", array("limit" => 100));
         $links = array();
         if(isset($response["result"]["data"]["error"])) return false;
         foreach ($response["result"]['data']['children'] as $child) {

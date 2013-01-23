@@ -263,7 +263,7 @@ class Reddit
         $verb = 'GET';
         $url = "http://www.reddit.com/r/{$subredditName}.json";
 
-        $response = $this->sendRequest($verb, $url);
+        $response = $this->sendRequest($verb, $url, array("limit" => 100));
 
         $links = array();
 
